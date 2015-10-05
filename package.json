@@ -1,0 +1,26 @@
+{
+  "name": "exif-date-infer",
+  "version": "0.1.0",
+  "description": "If exif date is not found, infer it from filename",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "exif",
+    "photo",
+    "date",
+    "infer",
+    "filename"
+  ],
+  "author": "Ronald ng",
+  "license": "MIT",
+  "dependencies": {
+    "moment": "^2.10.6",
+    "piexifjs": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "mocha": "^2.3.3"
+  }
+}
