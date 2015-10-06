@@ -20,7 +20,7 @@ function setFileExifDateTimeOriginal(path, date, overwrite){
     var data = fs.readFileSync(path).toString("binary"),
         exifObject = piexif.load(data), // load existing exif data so we don't lose them when saving the new one
         m = new moment(exifDate),
-        exifDateString = m.format('YYYY:MM:DD HH:mm:ss');
+        exifDateString = m.startOf('day').format('YYYY:MM:DD HH:mm:ss');
 
     // see https://www.npmjs.com/package/piexifjs
     exifObject.Exif[piexif.ExifIFD.DateTimeOriginal] = exifDateString;

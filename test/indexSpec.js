@@ -40,7 +40,7 @@ describe('index.js', function(){
             exifDateString = index.getFileExifDateTimeOriginal(expectedOutPath);
             try {
                 expect(exifDateString).not.to.be.null;
-                expect(exifDateString).to.equal("2015:09:09 08:00:00");
+                expect(exifDateString).to.equal("2015:09:09 00:00:00");
                 done()
             } catch (err) {
                 done(err);
@@ -65,7 +65,7 @@ describe('index.js', function(){
             exifDateString = index.getFileExifDateTimeOriginal(expectedOutPath);
             try {
                 expect(exifDateString).not.to.be.null;
-                expect(exifDateString).to.equal("2015:01:23 08:00:00");
+                expect(exifDateString).to.equal("2015:01:23 00:00:00");
                 done();
             } catch(err) {
                 done(err);
