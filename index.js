@@ -65,6 +65,25 @@ function inferDateFromFilename(path){
     }
 }
 
+function getImagePaths(dir){
+    var dirList = fs.readdirSync(dir).map(function(filename){
+            return pathTool.resolve(dir, filename);
+        }),
+        imagePaths = [];
+
+    dirList.forEach(function(path){
+        var pathStat = fs.statSync(path),
+            pathComp = pathTool.parse(path),
+            extNormalized = pathComp.ext.toLowerCase();
+
+        if ( !pathStat.isDirectory() && extNormalized === '.jpg' || extNormalized === '.jpeg'){
+            imagePaths.push(path);
+        }
+    });
+
+    return imagePaths;
+}
+
 function main(){
 
 }
@@ -72,5 +91,6 @@ function main(){
 module.exports = {
     getFileExifDateTimeOriginal: getFileExifDateTimeOriginal,
     inferDateFromFilename: inferDateFromFilename,
-    setFileExifDateTimeOriginal: setFileExifDateTimeOriginal
+    setFileExifDateTimeOriginal: setFileExifDateTimeOriginal,
+    getImagesPaths: getImagePaths
 };

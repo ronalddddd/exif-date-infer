@@ -1,6 +1,7 @@
 var expect = require('chai').expect,
     index = require('../index.js'),
-    path = require('path');
+    path = require('path'),
+    fs = require('fs');
 
 describe('index.js', function(){
     describe('getFileExifDateTimeOriginal(path)', function(){
@@ -37,9 +38,56 @@ describe('index.js', function(){
 
             index.setFileExifDateTimeOriginal(imgPath, targetDate);
             exifDateString = index.getFileExifDateTimeOriginal(expectedOutPath);
-            expect(exifDateString).not.to.be.null;
-            expect(exifDateString).to.equal("2015:09:09 08:00:00");
-            done();
+            try {
+                expect(exifDateString).not.to.be.null;
+                expect(exifDateString).to.equal("2015:09:09 08:00:00");
+                done()
+            } catch (err) {
+                done(err);
+            } finally {
+                fs.unlinkSync(expectedOutPath);
+            }
+        });
+
+        it ('should write the Exif DateTimeOriginal tag to an existing image file (overwrite == true)', function(done){
+            var originalFilePath = path.resolve(__dirname, '../test_data/IMG-20150909-WA0000.jpeg'),
+                imgPath = path.resolve(__dirname, '../test_data/IMG-20150123-WA0000.jpg'),
+                imgData = fs.readFileSync(originalFilePath);
+
+            // Make a copy to use for testing
+            fs.writeFileSync(imgPath, imgData);
+
+            var expectedOutPath = imgPath,
+                targetDate = index.inferDateFromFilename(imgPath),
+                exifDateString;
+
+            index.setFileExifDateTimeOriginal(imgPath, targetDate, true);
+            exifDateString = index.getFileExifDateTimeOriginal(expectedOutPath);
+            try {
+                expect(exifDateString).not.to.be.null;
+                expect(exifDateString).to.equal("2015:01:23 08:00:00");
+                done();
+            } catch(err) {
+                done(err);
+            } finally {
+                fs.unlinkSync(imgPath);
+            }
+        });
+    });
+
+    describe('getImagePaths(dir)', function(){
+        it('should return and array with 2 file paths', function(done){
+            var paths = index.getImagesPaths(path.resolve(__dirname, '../test_data'));
+            console.log(paths);
+            try {
+                expect(paths).to.be.an.instanceof(Array);
+                expect(paths.length).to.equal(2);
+                done();
+            } catch(err) {
+                done(err);
+            } finally {
+
+            }
         });
     });
 });
