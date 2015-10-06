@@ -12,7 +12,7 @@ describe('index.js', function(){
         it('returned promise should resolve to exif DateTimeOriginal string', function(done){
             var exifDateString = index.getFileExifDateTimeOriginal(path.resolve(__dirname, '../test_data/has-date.jpg'))
             expect(exifDateString).not.to.be.null;
-            expect(exifDateString).to.equal("2015:09:27 23:30:17");
+            expect(exifDateString).to.equal("2015:09:09 08:00:00");
             done();
         });
     });
@@ -30,7 +30,7 @@ describe('index.js', function(){
 
     describe('setFileExifDateTimeOriginal(path, date, overwrite)', function(){
         it ('should write the Exif DateTimeOriginal tag to a new image file (overwrite == false)', function(done){
-            var imgPath = path.resolve(__dirname, '../test_data/IMG-20150909-WA0000.jpg'),
+            var imgPath = path.resolve(__dirname, '../test_data/whatsapp_messenger/IMG-20150909-WA0000.jpg'),
                 imgPathComp = path.parse(imgPath),
                 expectedOutPath = path.resolve(imgPathComp.dir, imgPathComp.name + '_date_inferred' + imgPathComp.ext),
                 targetDate = index.inferDateFromFilename(imgPath),
@@ -50,8 +50,8 @@ describe('index.js', function(){
         });
 
         it ('should write the Exif DateTimeOriginal tag to an existing image file (overwrite == true)', function(done){
-            var originalFilePath = path.resolve(__dirname, '../test_data/IMG-20150909-WA0000.jpg'),
-                imgPath = path.resolve(__dirname, '../test_data/IMG-20150123-WA0000.jpg'),
+            var originalFilePath = path.resolve(__dirname, '../test_data/whatsapp_messenger/IMG-20150909-WA0000.jpg'),
+                imgPath = path.resolve(__dirname, '../test_data/whatsapp_messenger/IMG-20150123-WA0000.jpg'),
                 imgData = fs.readFileSync(originalFilePath);
 
             // Make a copy to use for testing
@@ -81,7 +81,7 @@ describe('index.js', function(){
             console.log(paths);
             try {
                 expect(paths).to.be.an.instanceof(Array);
-                expect(paths.length).to.equal(2);
+                expect(paths.length).to.equal(1);
                 done();
             } catch(err) {
                 done(err);
