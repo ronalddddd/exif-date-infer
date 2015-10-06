@@ -30,7 +30,7 @@ describe('index.js', function(){
 
     describe('setFileExifDateTimeOriginal(path, date, overwrite)', function(){
         it ('should write the Exif DateTimeOriginal tag to a new image file (overwrite == false)', function(done){
-            var imgPath = path.resolve(__dirname, '../test_data/IMG-20150909-WA0000.jpeg'),
+            var imgPath = path.resolve(__dirname, '../test_data/IMG-20150909-WA0000.jpg'),
                 imgPathComp = path.parse(imgPath),
                 expectedOutPath = path.resolve(imgPathComp.dir, imgPathComp.name + '_date_inferred' + imgPathComp.ext),
                 targetDate = index.inferDateFromFilename(imgPath),
@@ -50,7 +50,7 @@ describe('index.js', function(){
         });
 
         it ('should write the Exif DateTimeOriginal tag to an existing image file (overwrite == true)', function(done){
-            var originalFilePath = path.resolve(__dirname, '../test_data/IMG-20150909-WA0000.jpeg'),
+            var originalFilePath = path.resolve(__dirname, '../test_data/IMG-20150909-WA0000.jpg'),
                 imgPath = path.resolve(__dirname, '../test_data/IMG-20150123-WA0000.jpg'),
                 imgData = fs.readFileSync(originalFilePath);
 

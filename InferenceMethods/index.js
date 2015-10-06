@@ -1,3 +1,4 @@
 module.exports.list = [
-    require('./WhatsAppImage')
+    require('./WhatsAppImage'),
+    require('./FacebookMessengerImage')
 ];

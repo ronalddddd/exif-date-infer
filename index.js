@@ -71,8 +71,9 @@ function main(options){
     options = options || {};
     var dir = options.dir || process.cwd(),
         overwrite = options.overwrite || false,
+        force = options.force || false,
         imagePaths = getImagePaths(dir),
-        writeCount = 0, readCount = 0;
+        readCount = 0, writeCount = 0, failCount = 0;
 
     imagePaths.forEach(function(path){
         console.log('Checking %s...',path);
@@ -80,14 +81,18 @@ function main(options){
             writePath;
 
         readCount++;
-        if(!existingDateTimeOriginal){
+        if(!existingDateTimeOriginal || force){
             writePath = setFileExifDateTimeOriginal(path, inferDateFromFilename(path), overwrite);
-            writeCount++;
-            console.log('(%s) Wrote to %s', writeCount, writePath);
+            if(writePath){
+                writeCount++;
+                console.log('(%s) Wrote to %s', writeCount, writePath);
+            } else {
+                failCount++;
+            }
         }
     });
 
-    console.log('Checked %s files, wrote %s files.', readCount, writeCount);
+    console.log('Done. Checked %s files, wrote %s files, %s failed.', readCount, writeCount, failCount);
 }
 
 module.exports = {
