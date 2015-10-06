@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/ronalddddd/exif-date-infer.svg)](https://travis-ci.org/ronalddddd/exif-date-infer)
+[![Code Climate](https://codeclimate.com/github/ronalddddd/exif-date-infer/badges/gpa.svg)](https://codeclimate.com/github/ronalddddd/exif-date-infer)
 
 # exif-date-infer
 
