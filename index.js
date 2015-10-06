@@ -31,29 +31,12 @@ function setFileExifDateTimeOriginal(path, date, overwrite){
         writePath = (overwrite)? path : pathTool.join(pathComponents.dir, pathComponents.name + '_date_inferred' + pathComponents.ext);
 
     fs.writeFileSync(writePath, newJpeg);
+    return writePath;
 }
 
 function inferDateFromFilename(path){
     var i, test, testResult,
-        testList = [
-            // WhatsApp image file names
-            function testWhatsApp(filePath){
-                var r = /IMG\-(\d{8})\-WA\d+\..*/,
-                    rRes = r.exec(filePath),
-                    dateFragment, year, month, day;
-
-                if (rRes && rRes.length > 1){
-                    dateFragment = rRes[1];
-                    year = dateFragment.substr(0,4);
-                    month = dateFragment.substr(4,2);
-                    day = dateFragment.substr(6,2);
-
-                    return new Date(year + '-' + month + '-' + day);
-                } else {
-                    return false;
-                }
-            }
-        ];
+        testList = require('./InferenceMethods').list;
 
     for(i=0; i < testList.length; i++){
         test = testList[i];
@@ -84,13 +67,33 @@ function getImagePaths(dir){
     return imagePaths;
 }
 
-function main(){
+function main(options){
+    options = options || {};
+    var dir = options.dir || process.cwd(),
+        overwrite = options.overwrite || false,
+        imagePaths = getImagePaths(dir),
+        writeCount = 0, readCount = 0;
 
+    imagePaths.forEach(function(path){
+        console.log('Checking %s...',path);
+        var existingDateTimeOriginal = getFileExifDateTimeOriginal(path),
+            writePath;
+
+        readCount++;
+        if(!existingDateTimeOriginal){
+            writePath = setFileExifDateTimeOriginal(path, inferDateFromFilename(path), overwrite);
+            writeCount++;
+            console.log('(%s) Wrote to %s', writeCount, writePath);
+        }
+    });
+
+    console.log('Checked %s files, wrote %s files.', readCount, writeCount);
 }
 
 module.exports = {
     getFileExifDateTimeOriginal: getFileExifDateTimeOriginal,
     inferDateFromFilename: inferDateFromFilename,
     setFileExifDateTimeOriginal: setFileExifDateTimeOriginal,
-    getImagesPaths: getImagePaths
+    getImagesPaths: getImagePaths,
+    main: main
 };
