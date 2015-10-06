@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ronalddddd/exif-date-infer.svg)](https://travis-ci.org/ronalddddd/exif-date-infer)
+
 # exif-date-infer
 
 Adds Exif tag `DateTimeOriginal` to an image using a date inferred from the filename, if the file does not have an exif date entry already.
