@@ -1,6 +1,6 @@
 {
   "name": "exif-date-infer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "If exif date is not found, infer it from filename",
   "main": "index.js",
   "scripts": {
@@ -25,5 +25,9 @@
   },
   "bin": {
     "exif-date-infer": "bin/exif-date-infer.bin.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ronalddddd/exif-date-infer"
   }
 }
