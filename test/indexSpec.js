@@ -9,7 +9,7 @@ describe('index.js', function(){
             ready();
         });
 
-        it('returned promise should resolve to exif DateTimeOriginal string', function(done){
+        it('should return the image Exif DateTimeOriginal tag', function(done){
             var exifDateString = index.getFileExifDateTimeOriginal(path.resolve(__dirname, '../test_data/has-date.jpg'))
             expect(exifDateString).not.to.be.null;
             expect(exifDateString).to.equal("2015:09:09 08:00:00");
@@ -18,10 +18,10 @@ describe('index.js', function(){
     });
 
     describe('inferDateFromFilename(path)', function(){
-        it ('should return a correct date inferred from a recognized filename format', function(done){
+        it ('should return a correct Date inferred from a recognized filename format', function(done){
             var expectedTime = new Date('2015-09-09').getTime(),
                 inferredDate = index.inferDateFromFilename('/tmp/IMG-20150909-WA0000.jpeg');
-            console.log(inferredDate);
+            //console.log(inferredDate);
             expect(inferredDate).to.be.an.instanceof(Date);
             expect(inferredDate.getTime()).to.equal(expectedTime);
             done();
@@ -76,9 +76,9 @@ describe('index.js', function(){
     });
 
     describe('getImagePaths(dir)', function(){
-        it('should return and array with 2 file paths', function(done){
+        it('should return an array with file paths of images only', function(done){
             var paths = index.getImagesPaths(path.resolve(__dirname, '../test_data'));
-            console.log(paths);
+            //console.log(paths);
             try {
                 expect(paths).to.be.an.instanceof(Array);
                 expect(paths.length).to.equal(1);
